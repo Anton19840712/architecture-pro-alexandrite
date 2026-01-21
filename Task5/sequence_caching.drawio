@@ -1,0 +1,299 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="22.1.0">
+  <diagram name="Read - Get Orders List" id="read-sequence">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="700" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="Sequence Diagram: Read Orders List (Cache-Aside)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="200" y="20" width="500" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Participants -->
+        <mxCell id="frontend-box" value="MES Frontend" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="80" y="70" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="frontend-line" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="110" as="sourcePoint" />
+            <mxPoint x="130" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="api-box" value="MES API" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="280" y="70" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="api-line" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="110" as="sourcePoint" />
+            <mxPoint x="330" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="redis-box" value="Redis Cache" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FF6B6B;strokeColor=#333333;fontStyle=1;fontSize=11;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="480" y="70" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="redis-line" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="110" as="sourcePoint" />
+            <mxPoint x="530" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="db-box" value="MES DB" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="680" y="70" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="db-line" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="730" y="110" as="sourcePoint" />
+            <mxPoint x="730" y="650" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Step 1: Request -->
+        <mxCell id="step1" value="1. GET /orders?status=NEW&amp;page=1" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="140" as="sourcePoint" />
+            <mxPoint x="330" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Step 2: Check cache -->
+        <mxCell id="step2" value="2. GET orders:NEW:page1" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="170" as="sourcePoint" />
+            <mxPoint x="530" y="170" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Cache HIT branch -->
+        <mxCell id="hit-box" value="Cache HIT" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#90EE90;strokeColor=#333333;fontSize=10;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="200" y="200" width="460" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="step3a" value="3a. Return cached orders" style="endArrow=classic;html=1;strokeColor=#008800;fontSize=10;dashed=1;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="240" as="sourcePoint" />
+            <mxPoint x="330" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="step4a" value="4a. Return orders (fast)" style="endArrow=classic;html=1;strokeColor=#008800;fontSize=10;dashed=1;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="270" as="sourcePoint" />
+            <mxPoint x="130" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Cache MISS branch -->
+        <mxCell id="miss-box" value="Cache MISS" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFB6C1;strokeColor=#333333;fontSize=10;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="200" y="310" width="560" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="step3b" value="3b. Return null (miss)" style="endArrow=classic;html=1;strokeColor=#CC0000;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="350" as="sourcePoint" />
+            <mxPoint x="330" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="step4b" value="4b. SELECT * FROM orders WHERE status='NEW' LIMIT 20" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="380" as="sourcePoint" />
+            <mxPoint x="730" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="step5b" value="5b. Return orders from DB" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="730" y="410" as="sourcePoint" />
+            <mxPoint x="330" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="step6b" value="6b. SET orders:NEW:page1, TTL=60s" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="440" as="sourcePoint" />
+            <mxPoint x="530" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="step7b" value="7b. Return orders" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="470" as="sourcePoint" />
+            <mxPoint x="130" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Notes -->
+        <mxCell id="note1" value="Cache HIT: ~1-5ms response time" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontColor=#008800;fontStyle=2;" parent="1" vertex="1">
+          <mxGeometry x="200" y="280" width="200" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="note2" value="Cache MISS: ~50-200ms response time (includes DB query + cache write)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontColor=#CC0000;fontStyle=2;" parent="1" vertex="1">
+          <mxGeometry x="200" y="490" width="400" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="legend-box" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="600" y="530" width="180" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-title" value="Legend" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="610" y="535" width="60" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-new" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FF6B6B;strokeColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="610" y="555" width="15" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-new-text" value="New component (Redis)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" parent="1" vertex="1">
+          <mxGeometry x="630" y="555" width="140" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-hit" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#90EE90;strokeColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="610" y="575" width="15" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-hit-text" value="Cache HIT path" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" parent="1" vertex="1">
+          <mxGeometry x="630" y="575" width="140" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-miss" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFB6C1;strokeColor=#333333;" parent="1" vertex="1">
+          <mxGeometry x="610" y="595" width="15" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-miss-text" value="Cache MISS path" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" parent="1" vertex="1">
+          <mxGeometry x="630" y="595" width="140" height="15" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram name="Write - Update Order Status" id="write-sequence">
+    <mxGraphModel dx="800" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="600" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title2" value="Sequence Diagram: Update Order Status (Cache Invalidation)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1;fontSize=16;" parent="1" vertex="1">
+          <mxGeometry x="180" y="20" width="540" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Participants -->
+        <mxCell id="w-frontend-box" value="MES Frontend" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="80" y="70" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="w-frontend-line" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="110" as="sourcePoint" />
+            <mxPoint x="130" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="w-api-box" value="MES API" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="280" y="70" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="w-api-line" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="110" as="sourcePoint" />
+            <mxPoint x="330" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="w-db-box" value="MES DB" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#333333;fontStyle=1;fontSize=11;" parent="1" vertex="1">
+          <mxGeometry x="480" y="70" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="w-db-line" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="110" as="sourcePoint" />
+            <mxPoint x="530" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="w-redis-box" value="Redis Cache" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FF6B6B;strokeColor=#333333;fontStyle=1;fontSize=11;fontColor=#ffffff;" parent="1" vertex="1">
+          <mxGeometry x="680" y="70" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="w-redis-line" value="" style="endArrow=none;dashed=1;html=1;strokeColor=#999999;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="730" y="110" as="sourcePoint" />
+            <mxPoint x="730" y="520" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Step 1: Request -->
+        <mxCell id="w-step1" value="1. PUT /orders/ORD-123/status {status: &quot;IN_PROGRESS&quot;}" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="150" as="sourcePoint" />
+            <mxPoint x="330" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Step 2: Get old status -->
+        <mxCell id="w-step2" value="2. SELECT status FROM orders WHERE id='ORD-123'" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="190" as="sourcePoint" />
+            <mxPoint x="530" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="w-step2r" value="oldStatus = 'NEW'" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="220" as="sourcePoint" />
+            <mxPoint x="330" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Step 3: Update DB -->
+        <mxCell id="w-step3" value="3. UPDATE orders SET status='IN_PROGRESS' WHERE id='ORD-123'" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="260" as="sourcePoint" />
+            <mxPoint x="530" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="w-step3r" value="OK (1 row updated)" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="290" as="sourcePoint" />
+            <mxPoint x="330" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Step 4: Invalidate cache -->
+        <mxCell id="invalidate-box" value="Cache Invalidation" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFD700;strokeColor=#333333;fontSize=10;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="300" y="320" width="460" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="w-step4a" value="4a. DEL orders:NEW:* (old status)" style="endArrow=classic;html=1;strokeColor=#CC0000;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="360" as="sourcePoint" />
+            <mxPoint x="730" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="w-step4b" value="4b. DEL orders:IN_PROGRESS:* (new status)" style="endArrow=classic;html=1;strokeColor=#CC0000;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="390" as="sourcePoint" />
+            <mxPoint x="730" y="390" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="w-step4c" value="4c. DEL order:ORD-123 (order details)" style="endArrow=classic;html=1;strokeColor=#CC0000;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="420" as="sourcePoint" />
+            <mxPoint x="730" y="420" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Step 5: Response -->
+        <mxCell id="w-step5" value="5. 200 OK" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="460" as="sourcePoint" />
+            <mxPoint x="130" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+
+        <!-- Note -->
+        <mxCell id="w-note" value="After invalidation, next read will trigger Cache MISS and refresh from DB" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontColor=#666666;fontStyle=2;" parent="1" vertex="1">
+          <mxGeometry x="80" y="490" width="400" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
