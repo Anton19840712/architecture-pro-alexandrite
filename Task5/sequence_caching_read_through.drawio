@@ -73,34 +73,34 @@
         <mxCell id="miss-box" value="Cache MISS" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFB6C1;strokeColor=#333333;fontSize=10;fontStyle=1;" parent="1" vertex="1">
           <mxGeometry x="200" y="310" width="560" height="20" as="geometry" />
         </mxCell>
-                <mxCell id=\"step3b\" value=\"3b. Cache MISS: запрос к БД\" style=\"endArrow=classic;html=1;strokeColor=#CC0000;fontSize=10;\" parent=\"1\" edge=\"1\">
-          <mxGeometry relative=\"1\" as=\"geometry\">
-            <mxPoint x=\"530\" y=\"350\" as=\"sourcePoint\" />
-            <mxPoint x=\"730\" y=\"350\" as=\"targetPoint\" />
+                <mxCell id="step3b" value="3b. Cache MISS: запрос к БД" style="endArrow=classic;html=1;strokeColor=#CC0000;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="350" as="sourcePoint" />
+            <mxPoint x="730" y="350" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-                <mxCell id=\"step4b\" value=\"4b. Return orders from DB\" style=\"endArrow=classic;html=1;strokeColor=#333333;fontSize=10;\" parent=\"1\" edge=\"1\">
-          <mxGeometry relative=\"1\" as=\"geometry\">
-            <mxPoint x=\"730\" y=\"380\" as=\"sourcePoint\" />
-            <mxPoint x=\"530\" y=\"380\" as=\"targetPoint\" />
+                <mxCell id="step4b" value="4b. Return orders from DB" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="730" y="380" as="sourcePoint" />
+            <mxPoint x="530" y="380" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-                <mxCell id=\"step5b\" value=\"5b. Cache stores orders, TTL=60s\" style=\"endArrow=classic;html=1;strokeColor=#333333;fontSize=10;\" parent=\"1\" edge=\"1\">
-          <mxGeometry relative=\"1\" as=\"geometry\">
-            <mxPoint x=\"530\" y=\"410\" as=\"sourcePoint\" />
-            <mxPoint x=\"560\" y=\"410\" as=\"targetPoint\" />
+                <mxCell id="step5b" value="5b. Cache stores orders, TTL=60s" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="410" as="sourcePoint" />
+            <mxPoint x="560" y="410" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-                <mxCell id=\"step6b\" value=\"6b. Return orders to API\" style=\"endArrow=classic;html=1;strokeColor=#333333;fontSize=10;\" parent=\"1\" edge=\"1\">
-          <mxGeometry relative=\"1\" as=\"geometry\">
-            <mxPoint x=\"530\" y=\"440\" as=\"sourcePoint\" />
-            <mxPoint x=\"330\" y=\"440\" as=\"targetPoint\" />
+                <mxCell id="step6b" value="6b. Return orders to API" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="530" y="440" as="sourcePoint" />
+            <mxPoint x="330" y="440" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-                <mxCell id=\"step7b\" value=\"7b. Return orders\" style=\"endArrow=classic;html=1;strokeColor=#333333;fontSize=10;\" parent=\"1\" edge=\"1\">
-          <mxGeometry relative=\"1\" as=\"geometry\">
-            <mxPoint x=\"330\" y=\"470\" as=\"sourcePoint\" />
-            <mxPoint x=\"130\" y=\"470\" as=\"targetPoint\" />
+                <mxCell id="step7b" value="7b. Return orders" style="endArrow=classic;html=1;strokeColor=#333333;fontSize=10;" parent="1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="330" y="470" as="sourcePoint" />
+            <mxPoint x="130" y="470" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="note1" value="Cache HIT: ~1-5ms response time" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;fontColor=#008800;fontStyle=2;" parent="1" vertex="1">
